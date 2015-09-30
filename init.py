@@ -1,10 +1,14 @@
 __author__ = 'JoshBaker'
 import os, os.path
 
-#Define archive location
-myArchive = os.path.expanduser("~/myArchive")
-
-if os.path.exists(myArchive) and os.path.isdir(myArchive):
-  print "Archive Directory exists"
-else:
-  print "Archive Directory not yet created"
+def init(directory):
+    try:
+        os.makedirs(os.path.join(directory, 'objects'))
+        indexFilePath = os.path.join(directory, 'index.txt')
+        if not os.path.exists(indexFilePath):
+            open(indexFilePath, 'a')
+            print "Archive directory created with subdirectory 'objects' and file 'index.txt' in " + directory
+        else:
+            print "Backup already intialised"
+    except OSError:
+        print "Error: Could not create directories or files"
