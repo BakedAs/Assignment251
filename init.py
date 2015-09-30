@@ -3,7 +3,9 @@ import os, os.path
 
 def init(directory):
     try:
-        os.makedirs(os.path.join(directory, 'objects'))
+        objectFilePath = os.path.join(directory, 'objects')
+        if not os.path.isdir(objectFilePath):
+            os.makedirs(os.path.join(directory, 'objects'))
         indexFilePath = os.path.join(directory, 'index.txt')
         if not os.path.exists(indexFilePath):
             open(indexFilePath, 'a')

@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-import sys, os, init, store;
+import sys, os, init, listBackups, store;
 
 #Define archive location
 archiveDir = os.path.expanduser("~/myArchive");
@@ -15,6 +15,11 @@ def main (argv):
             print "Usage: mybackup store <directory>";
         else:
             store.store(archiveDir, argv[1]);
+    elif (argv[0] == "list"):
+        if (len(argv) < 2):
+            listBackups.list(archiveDir)
+        else:
+            listBackups.list(archiveDir, argv[1])
     else:
         print "Unknown option: "+argv[0];
 

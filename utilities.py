@@ -30,3 +30,5 @@ def createFileSignature (filename):
         if f:
             f.close()
     return(signature)
+
+#to search for an filename via an index
