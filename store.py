@@ -1,6 +1,7 @@
 import os, os.path, shutil, utilities;
 
-def store (archiveDir, dirToBackup):
+def store (archiveDir, dirToBackup, verbose=True):
+    dirToBackup = os.path.abspath(dirToBackup);
     if (os.path.exists(archiveDir) and os.path.isdir(archiveDir)):
         if (not os.path.exists(dirToBackup)):
             print "Directory '"+dirToBackup+"' does not exist!";
@@ -8,17 +9,23 @@ def store (archiveDir, dirToBackup):
         elif (not os.path.isdir(dirToBackup)):
             print "File '"+dirToBackup+"' is not a directory!";
             return;
+        index = utilities.loadIndex(archiveDir);
+        objectsDir = os.path.join(archiveDir, "objects");
         for root, dirs, files in os.walk(dirToBackup):
             for name in files:
-                backupFile(archiveDir, os.path.join(root, name));
+                backupFile(objectsDir, os.path.join(root, name), index, verbose);
+        utilities.saveIndex(archiveDir, index);
     else:
         print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'store'.";
 
         
-def backupFile (archiveDir, fileName):
+def backupFile (archiveDir, fileName, index, verbose=True):
     hash = utilities.createFileSignature(fileName)[2];
-    index = utilities.loadIndex(archiveDir);
     if (index.has_key(fileName)):
+        if (index[fileName] == hash):
+            if (verbose):
+                print "Backup file '"+fileName+"' already exists and is up-to-date; skipping.";
+            return;
         #Check whether the file is already in the index
         #If so, remove the existing file
         canRemove = True;
@@ -27,7 +34,10 @@ def backupFile (archiveDir, fileName):
                 canRemove = False;#Another file exists with the same hash
         if (canRemove):
             os.remove(os.path.join(archiveDir, index[fileName]));
+        if (verbose):
+            print "Replacing backup file '"+fileName+"'";
+    elif (verbose):
+        print "Adding new file '"+fileName+"' to backup.";
     index[fileName] = hash;
     shutil.copyfile(fileName, os.path.join(archiveDir, hash));
-    utilities.saveIndex(archiveDir, index);
     
