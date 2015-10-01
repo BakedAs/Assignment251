@@ -1,6 +1,4 @@
-__author__ = 'JoshBaker'
-
-import os, os.path, hashlib
+import os, os.path, hashlib, pickle;
 
 def createFileSignature (filename):
     """CreateFileHash (file): create a signature for the specified file
@@ -32,3 +30,18 @@ def createFileSignature (filename):
     return(signature)
 
 #to search for an filename via an index
+
+#Loads the index file from the specified archive directory. Returns a dictionary with file paths as keys and file hashes as values.
+def loadIndex (archiveDir):
+    indexFile = os.path.join(archiveDir, "index.txt");
+    if (not os.path.exists(indexFile)):
+        raise IOError("Index not found at "+indexFile);
+    return pickle.load(open(indexFile, "r"));
+
+#Saves the index to the specified archive directory
+def saveIndex (archiveDir, index):
+    indexFile = os.path.join(archiveDir, "index.txt");
+    if (not os.path.exists(indexFile)):
+        raise IOError("Index not found at "+indexFile);
+    pickle.dump(index, open(indexFile, "rw"));
+        
