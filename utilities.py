@@ -1,4 +1,4 @@
-import os, os.path, hashlib, pickle;
+import os, os.path, hashlib, json;
 
 def createFileSignature (filename):
     """CreateFileHash (file): create a signature for the specified file
@@ -36,12 +36,12 @@ def loadIndex (archiveDir):
     indexFile = os.path.join(archiveDir, "index.txt");
     if (not os.path.exists(indexFile)):
         raise IOError("Index not found at "+indexFile);
-    return pickle.load(open(indexFile, "r"));
+    return json.load(open(indexFile, "r"));
 
 #Saves the index to the specified archive directory
 def saveIndex (archiveDir, index):
     indexFile = os.path.join(archiveDir, "index.txt");
     if (not os.path.exists(indexFile)):
         raise IOError("Index not found at "+indexFile);
-    pickle.dump(index, open(indexFile, "rw"));
+    json.dump(index, open(indexFile, "w"));
         
