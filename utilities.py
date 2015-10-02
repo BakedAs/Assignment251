@@ -43,5 +43,5 @@ def saveIndex (archiveDir, index):
     indexFile = os.path.join(archiveDir, "index.txt");
     if (not os.path.exists(indexFile)):
         raise IOError("Index not found at "+indexFile);
-    json.dump(index, open(indexFile, "w"));
+    json.dump(index, open(indexFile, "w"),indent=4);
         

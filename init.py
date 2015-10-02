@@ -1,5 +1,5 @@
 __author__ = 'JoshBaker'
-import os, os.path
+import os, os.path, utilities
 
 def init(directory):
     try:
@@ -9,6 +9,7 @@ def init(directory):
         indexFilePath = os.path.join(directory, 'index.txt')
         if not os.path.exists(indexFilePath):
             open(indexFilePath, 'a')
+            utilities.saveIndex(directory, {})
             print "Archive directory created with subdirectory 'objects' and file 'index.txt' in " + directory
         else:
             print "Backup already intialised"
