@@ -3,10 +3,12 @@ import os, os.path, utilities
 
 def list(directory, pattern = None):
     index = utilities.loadIndex(directory)
-    pattern = pattern.lower()
-    for key in index:
-        keyLower = key.lower()
-        if pattern == None:
-            print key
-        elif pattern in keyLower:
+    if pattern != None:
+        pattern = pattern.lower()
+        for key in index:
+            keyLower = key.lower()
+            if pattern in keyLower:
+                print key
+    else:
+        for key in index:
             print key
