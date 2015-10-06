@@ -4,13 +4,16 @@ import os, os.path, utilities
 def init(directory):
     try:
         objectFilePath = os.path.join(directory, 'objects')
+        indexFilePath = os.path.join(directory, 'index.txt')
+        logFilePath = os.path.join(directory, 'log.txt')
         if not os.path.isdir(objectFilePath):
             os.makedirs(os.path.join(directory, 'objects'))
-        indexFilePath = os.path.join(directory, 'index.txt')
+        if not os.path.exists(logFilePath):
+            open(logFilePath, 'a')
         if not os.path.exists(indexFilePath):
             open(indexFilePath, 'a')
             utilities.saveIndex(directory, {})
-            print "Archive directory created with subdirectory 'objects' and file 'index.txt' in " + directory
+            print "Archive directory created with subdirectory 'objects' and files 'log.txt' & 'index.txt' in " + directory
         else:
             print "Backup already intialised"
     except OSError:
