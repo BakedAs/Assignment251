@@ -32,7 +32,7 @@ def backupFile (archiveDir, fileName, index, verbose=True):
         for key, value in index.items():
             if (value == hash and key != fileName):
                 canRemove = False;#Another file exists with the same hash
-        if (canRemove):
+        if (canRemove and os.path.exists(index[fileName])):
             os.remove(os.path.join(archiveDir, index[fileName]));
         if (verbose):
             print "Replacing backup file '"+fileName+"'";
