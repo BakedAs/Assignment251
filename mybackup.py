@@ -20,11 +20,16 @@ def main (argv):
             listBackups.list(archiveDir)
         else:
             listBackups.list(archiveDir, argv[1])
+    elif (argv[0] == "get"):
+        if (len(argv) < 2):
+            print "Usage: mybackup get <directory>";
+        else:
+            restore.getFile(archiveDir, argv[1]);
     elif (argv[0] == "restore"):
         if (len(argv) < 2):
-            restore.restore(archiveDir)
+            restore.restoreAll(archiveDir)
         else:
-            restore.restore(archiveDir, argv[1])
+            restore.restoreAll(archiveDir, argv[1])
     else:
         print "Unknown option: "+argv[0];
 
