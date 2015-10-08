@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-import sys, os, init, listBackups, store, restore;
+import sys, os, init, listBackups, store, restore, test;
 
 #Define archive location
 archiveDir = os.path.expanduser("~/myArchive");
@@ -30,6 +30,8 @@ def main (argv):
             restore.restoreAll(archiveDir)
         else:
             restore.restoreAll(archiveDir, argv[1])
+    elif (argv[0] == "test"):
+        test.test(archiveDir)
     else:
         print "Unknown option: "+argv[0];
 

@@ -11,7 +11,7 @@ def list(directory, pattern = None):
             if pattern in keyLower:
                 print key
                 switch = False
-        if switch == True:
+        if switch:
             print "No matches found"
     else:
         for key in index:
