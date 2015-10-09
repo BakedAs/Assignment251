@@ -1,7 +1,6 @@
 __author__ = 'JoshBaker'
 import os, os.path, utilities
 
-
 def list(directory, pattern=None):
     index = utilities.loadIndex(directory)
     if pattern is not None:
