@@ -1,9 +1,10 @@
 __author__ = 'JoshBaker'
 import os, os.path, utilities
 
-def list(directory, pattern = None):
+
+def list(directory, pattern=None):
     index = utilities.loadIndex(directory)
-    if pattern != None:
+    if pattern is not None:
         pattern = pattern.lower()
         switch = True
         for key in index:
