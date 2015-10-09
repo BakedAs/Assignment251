@@ -27,8 +27,10 @@ def getFile (archiveDir, searchPattern):
             print str(i)+": "+name;
         destName = None;
         while (destName == None):
-            responseStr = raw_input("Enter your choice: ");
+            responseStr = raw_input("Enter your choice (q to cancel): ");
             try:
+                if (responseStr.lower() == 'q'):
+                    return;
                 choice = int(responseStr);
                 if (choice < 1 or choice > i):#If the choice was out of range
                     print "Invalid choice "+str(choice)+"! Please select again.";
