@@ -4,12 +4,14 @@ import os, os.path, utilities
 def test(directory):
     index = utilities.loadIndex(directory)
     objectFilePath = os.path.join(directory, 'objects')
-    print index
-    # print objectFilePath
-    for file in os.listdir(objectFilePath):
-        # file.strip("/Users/JoshBaker/Documents/Repositories/Assignment251/.git/objects/")
-        # print file
-        for key in index:
-            # print key
-            if key in file:
-                print "matching file"
+    counter = 0
+    for filename, hash in index.items():
+        max = len(index.items())
+        counter += 1
+        if not os.path.exists(os.path.join(objectFilePath, hash)):
+            print "This object does not have a matching file: " + hash
+        elif max <= counter:
+            print "All good here"
+    # for filename, hash in index.items():
+
+
