@@ -2,9 +2,9 @@ import os, os.path, shutil, utilities;
 
 def restoreAll (archiveDir, path=None):
     index = utilities.loadIndex(archiveDir);
-    if (path is None):
+    if (path is None):#Restore to the original locations
         for filename, fileHash in index.items():
-            restoreFile(archiveDir, filename, fileHash);
+            restoreFile(archiveDir, fileHash, filename);
     else:        
         print "Attempting to restore to path "+path;
         path = os.path.abspath(path);
