@@ -1,7 +1,19 @@
 import os, os.path, shutil, utilities;
 
-def restoreAll (archiveDir, path="."):
-    print "Attempting to restore to path "+path;
+def restoreAll (archiveDir, path=None):
+    index = utilities.loadIndex(archiveDir);
+    if (path is None):
+        for filename, fileHash in index.items():
+            restoreFile(archiveDir, filename, fileHash);
+    else:        
+        print "Attempting to restore to path "+path;
+        path = os.path.abspath(path);
+        for filepath, fileHash in index.items():
+            dest = os.path.join(path, os.path.splitdrive(filepath)[1].lstrip(os.sep));
+            destDir = os.path.dirname(dest);
+            if not os.path.exists(destDir):
+                os.makedirs(destDir);
+            restoreFile(archiveDir, fileHash, dest);
     
 def getFile (archiveDir, searchPattern):
     index = utilities.loadIndex(archiveDir);
