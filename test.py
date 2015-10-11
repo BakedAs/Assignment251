@@ -8,9 +8,10 @@ def test(directory):
     counter = 0
     erroneousPaths = []
 
-    for object in os.listdir(objectFilePath):
-        if object not in index:
-            print "This object does not have a matching filename: " + str(object)
+    for fileName in index:
+        hashName = utilities.createFileSignature(fileName);
+        if hashName not in index:
+            print "This file does not have a matching filename: " + str(hashName)
 
     for filename, hash in index.items():
         if not os.path.exists(os.path.join(objectFilePath, hash)):
