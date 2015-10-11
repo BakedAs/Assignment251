@@ -1,11 +1,44 @@
 #!/usr/bin/env python2
 
 import sys, os, init, listBackups, store, restore, test;
+import logging, logging.handlers;
+
+PROGRAM_NAME="myBackup";
+LOG_FILENAME=PROGRAM_NAME + '.log';
 
 #Define archive location
 archiveDir = os.path.expanduser("~/myArchive");
 
+def initLogger():
+    loggerPath = os.path.join(archiveDir, LOG_FILENAME);
+    logger = logging.getLogger(PROGRAM_NAME);
+    #====================================================================================
+    # FILE-BASED LOG
+
+    # Create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    #formatter = logging.Formatter('%(levelname)s - %(message)s')
+
+    # LOGFILE HANDLER - SELECT ONE OF THE FOLLOWING TWO LINES
+
+    fh = logging.FileHandler(loggerPath)                          # Continuous Single Log
+
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+    
+    #=================================================================================
+    # CONSOLE HANDLER - can have a different loglevel and format to the file-based log 
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(message)s')     # simpler display format
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    return logger;
+
 def main (argv):
+    logger = initLogger();
+        
     if (len(argv) == 0):
         print "Missing argument. Options: init, store, list, test, get, restore";
     elif (argv[0] == "init"):
@@ -14,7 +47,7 @@ def main (argv):
         if (len(argv) < 2):
             print "Usage: mybackup store <directory>";
         else:
-            store.store(archiveDir, argv[1]);
+            store.store(archiveDir, argv[1], logger);
     elif (argv[0] == "list"):
         if (len(argv) < 2):
             listBackups.list(archiveDir)
