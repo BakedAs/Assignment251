@@ -24,7 +24,7 @@ def backupFile (archiveDir, fileName, index, logger):
     hash = utilities.createFileSignature(fileName)[2];
     if (index.has_key(fileName)):
         if (index[fileName] == hash):
-            print "Backup file '"+fileName+"' already exists and is up-to-date; skipping.";
+            logger.debug("Backup file '"+fileName+"' already exists and is up-to-date; skipping.");
             return;
         #Check whether the file is already in the index
         #If so, remove the existing file

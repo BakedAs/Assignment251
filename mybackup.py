@@ -12,6 +12,7 @@ archiveDir = os.path.expanduser("~/myArchive");
 def initLogger():
     loggerPath = os.path.join(archiveDir, LOG_FILENAME);
     logger = logging.getLogger(PROGRAM_NAME);
+    logger.setLevel(logging.DEBUG);
     #====================================================================================
     # FILE-BASED LOG
 
@@ -38,7 +39,7 @@ def initLogger():
 
 def main (argv):
     logger = initLogger();
-        
+    
     if (len(argv) == 0):
         print "Missing argument. Options: init, store, list, test, get, restore";
     elif (argv[0] == "init"):
