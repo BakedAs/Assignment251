@@ -1,3 +1,4 @@
+__author__ = 'FrancisGreatorex'
 import os, os.path, hashlib, json;
 
 def createFileSignature (filename):

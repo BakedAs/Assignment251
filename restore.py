@@ -1,3 +1,4 @@
+__author__ = 'FrancisGreatorex'
 import os, os.path, shutil, utilities;
 
 def restoreAll (archiveDir, path=None):

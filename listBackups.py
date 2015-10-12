@@ -5,13 +5,13 @@ def list(directory, pattern=None):
     index = utilities.loadIndex(directory)
     if pattern is not None:
         pattern = pattern.lower()
-        switch = True
+        everythingIsFine = True
         for key in index:
             keyLower = key.lower()
             if pattern in keyLower:
                 print key
-                switch = False
-        if switch:
+                everythingIsFine = False
+        if everythingIsFine:
             print "No matches found"
     else:
         for key in index:

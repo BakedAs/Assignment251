@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-
+__author__ = 'FrancisGreatorex'
 import sys, os, init, listBackups, store, restore, test;
 import logging, logging.handlers;
 
@@ -21,12 +21,11 @@ def initLogger():
     #formatter = logging.Formatter('%(levelname)s - %(message)s')
 
     # LOGFILE HANDLER - SELECT ONE OF THE FOLLOWING TWO LINES
-
-    fh = logging.FileHandler(loggerPath)                          # Continuous Single Log
-
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
+    if os.path.exists(archiveDir):
+        fh = logging.FileHandler(loggerPath)                          # Continuous Single Log
+        fh.setLevel(logging.INFO)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
     
     #=================================================================================
     # CONSOLE HANDLER - can have a different loglevel and format to the file-based log 
@@ -65,7 +64,7 @@ def main (argv):
         else:
             restore.restoreAll(archiveDir, argv[1])
     elif (argv[0] == "test"):
-        test.test(archiveDir)
+        test.test(archiveDir, logger)
     else:
         print "Unknown option: "+argv[0];
 
