@@ -4,14 +4,17 @@ import os, os.path, utilities
 def test(directory):
     index = utilities.loadIndex(directory)
     objectFilePath = os.path.join(directory, 'objects')
+
     everythingIsFine = True
     counter = 0
     erroneousPaths = []
 
-    for fileName in index:
-        hashName = utilities.createFileSignature(fileName);
-        if hashName not in index:
-            print "This file does not have a matching filename: " + str(hashName)
+    for fileName in os.listdir(objectFilePath):
+        filePath = os.path.join(objectFilePath, fileName)
+        hash = utilities.createFileSignature(filePath)[2]
+        if hash != fileName:
+            print "This file does not have a matching filename: " + str(hash)
+            everythingIsFine = False
 
     for filename, hash in index.items():
         if not os.path.exists(os.path.join(objectFilePath, hash)):
@@ -29,5 +32,3 @@ def test(directory):
         for fileName in erroneousPaths:
             print fileName
         print "The number of valid files is: " + str(counter)
-
-
