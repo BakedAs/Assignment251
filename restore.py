@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 __author__ = 'FrancisGreatorex'
-import os, os.path, shutil, utilities;
-=======
 import os, os.path, shutil, utilities, sys;
->>>>>>> Added 'quit' functionality.
 
 def restoreAll (archiveDir, path=None):
     index = utilities.loadIndex(archiveDir);
