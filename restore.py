@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 __author__ = 'FrancisGreatorex'
 import os, os.path, shutil, utilities;
+=======
+import os, os.path, shutil, utilities, sys;
+>>>>>>> Added 'quit' functionality.
 
 def restoreAll (archiveDir, path=None):
     index = utilities.loadIndex(archiveDir);
@@ -58,11 +62,13 @@ def getFile (archiveDir, searchPattern):
 def restoreFile (archiveDir, fileHash, dest, verbose=True):
     if (os.path.exists(dest)):
         while (True):
-            response = raw_input("File already exists at "+dest+". Overwrite? (y/n)").lower();
+            response = raw_input("File already exists at "+dest+". Overwrite? (y/n/q)").lower();
             if (response == 'y' or response == 'yes'):
                 break;#User wishes to overwrite existing file. Break out of the loop and continue the function.
             elif (response == 'n' or response == 'no'):
                 return;#User does not wish to overwrite existsing file. Return from function
+            elif (response == 'q' or response == 'exit'):
+                sys.exit(0);#User wants to quit out of the program.
             else:#User entered an invalid response. Ask again.
                 print "Invalid response "+response;
     if (verbose):
