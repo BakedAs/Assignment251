@@ -14,7 +14,10 @@ def store (archiveDir, dirToBackup, logger):
         objectsDir = os.path.join(archiveDir, "objects");
         for root, dirs, files in os.walk(dirToBackup):
             for name in files:
-                backupFile(objectsDir, os.path.join(root, name), index, logger);
+                try:
+                    backupFile(objectsDir, os.path.join(root, name), index, logger);
+                except OSError as (errno, strerror, filename):
+                    print "Failed to backup file "+name+": "+strerror;
         utilities.saveIndex(archiveDir, index);
     else:
         print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'store'.";
