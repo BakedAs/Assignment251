@@ -26,9 +26,8 @@ If you have Python as part of your path: (OSX and Linux have this built in)
 
        Where command is:
 
-       *    store - will backup the directory and subsequent sub-directories given as parameter
-       *    restore - will restore the the directory or file given as a parameter
+       *    store - will add all files directory given as &lt;parameter&gt;, and any sub-directories, to the backup archive
+       *    restore - will restore all files in the archive to the directory given as &lt;parameter&gt;, or to their original directories if no parameter is given.
        *    list - will display all of the directories or files given as a parameter or all if no parameter given
-       *    get - will get the file specified by the parameter given and restore it into the current working directory
-       *    test - will test the validity of the backup ensuring all files are accounted for and the file names match
-       the objects created in the objects directory (no parameter required)
+       *    get - will get the file specified by the pattern given as &lt;parameter&gt; and restore it into the current working directory. If multiple files match the pattern, you will be prompted to choose the file to restore.
+       *    test - will test the validity of the backup ensuring all files are accounted for and the file names match the objects created in the objects directory (no parameter required)
