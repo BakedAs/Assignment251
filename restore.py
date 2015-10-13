@@ -8,16 +8,26 @@ def restoreAll (archiveDir, path=None):
     index = utilities.loadIndex(archiveDir);
     if (path is None):#Restore to the original locations
         for filename, fileHash in index.items():
-            restoreFile(archiveDir, fileHash, filename);
+            try:
+                restoreFile(archiveDir, fileHash, filename);            
+            except OSError as (errno, strerror):
+                print "Failed to restore file '"+filename+"': "+strerror;
+            except IOError as (errno, strerror):
+                print "Failed to restore file '"+filename+"': "+strerror;
     else:        
         print "Attempting to restore to path "+path;
         path = os.path.abspath(path);
         for filepath, fileHash in index.items():
             dest = os.path.join(path, os.path.splitdrive(filepath)[1].lstrip(os.sep));
             destDir = os.path.dirname(dest);
-            if not os.path.exists(destDir):
-                os.makedirs(destDir);
-            restoreFile(archiveDir, fileHash, dest);
+            try:
+                if not os.path.exists(destDir):
+                    os.makedirs(destDir);
+                restoreFile(archiveDir, fileHash, dest);
+            except OSError as (errno, strerror):
+                print "Failed to restore file '"+filepath+"' to '"+dest+"': "+strerror;
+            except IOError as (errno, strerror):
+                print "Failed to restore file '"+filepath+"' to '"+dest+"': "+strerror;
     
 def getFile (archiveDir, searchPattern):
     if (not os.path.exists(archiveDir) or not os.path.isdir(archiveDir)):
@@ -36,7 +46,12 @@ def getFile (archiveDir, searchPattern):
     elif (len(matches) == 1):
         #Set the destination to the cwd and the filename to the old filename
         newDest = os.path.join(os.getcwd(), os.path.basename(matches[0]));
-        restoreFile(archiveDir, index[matches[0]], newDest);
+        try:
+            restoreFile(archiveDir, index[matches[0]], newDest);            
+        except OSError as (errno, strerror):
+            print "Failed to get file '"+matches[0]+"': "+strerror;
+        except IOError as (errno, strerror):
+            print "Failed to get file '"+matches[0]+"': "+strerror;
     else:
         #There's multiple entries matching the pattern. List them and let the user choose which one they want.
         print "Multiple entries found. Please select the one you wish to restore."
@@ -59,7 +74,12 @@ def getFile (archiveDir, searchPattern):
                 print "Invalid response "+responseStr+"! Please select again.";
         #Set the destination to the cwd and the filename to the old filename
         newDest = os.path.join(os.getcwd(), os.path.basename(destName));
-        restoreFile(archiveDir, index[destName], newDest);
+        try:
+            restoreFile(archiveDir, index[destName], newDest);            
+        except OSError as (errno, strerror):
+            print "Failed to get file '"+destName+"': "+strerror;
+        except IOError as (errno, strerror):
+            print "Failed to get file '"+destName+"': "+strerror;
         
 def restoreFile (archiveDir, fileHash, dest, verbose=True):
     if (os.path.exists(dest)):

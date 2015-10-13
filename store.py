@@ -17,28 +17,30 @@ def store (archiveDir, dirToBackup, logger):
                 try:
                     backupFile(objectsDir, os.path.join(root, name), index, logger);
                 except OSError as (errno, strerror, filename):
-                    print "Failed to backup file "+name+": "+strerror;
+                    print "Failed to backup file '"+name+"': "+strerror;
+                except IOError as (errno, strerror):
+                    print "Failed to backup file '"+name+"': "+strerror;
         utilities.saveIndex(archiveDir, index);
     else:
         print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'store'.";
 
         
 def backupFile (archiveDir, fileName, index, logger):
-    hash = utilities.createFileSignature(fileName)[2];
+    fileHash = utilities.createFileSignature(fileName)[2];
     if (index.has_key(fileName)):
-        if (index[fileName] == hash):
+        if (index[fileName] == fileHash):
             logger.debug("Backup file '"+fileName+"' already exists and is up-to-date; skipping.");
             return;
         #Check whether the file is already in the index
         #If so, remove the existing file
         canRemove = True;
         for key, value in index.items():
-            if (value == hash and key != fileName):
+            if (value == fileHash and key != fileName):
                 canRemove = False;#Another file exists with the same hash
         if (canRemove and os.path.exists(index[fileName])):
             os.remove(os.path.join(archiveDir, index[fileName]));
         logger.info("Replacing backup file '"+fileName+"'");
     logger.info("Adding new file '"+fileName+"' to backup.");
-    index[fileName] = hash;
-    shutil.copyfile(fileName, os.path.join(archiveDir, hash));
+    index[fileName] = fileHash;
+    shutil.copyfile(fileName, os.path.join(archiveDir, fileHash));
     

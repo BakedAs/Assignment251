@@ -21,10 +21,10 @@ def createFileSignature (filename):
 
         hashValue = hash.hexdigest()
         signature = (filename,  modTime, hashValue)
-    except IOError:
-        signature = None
-    except OSError:
-        signature = None
+    except IOError as e:
+        raise e;
+    except OSError as e:
+        raise e;
     finally:
         if f:
             f.close()
