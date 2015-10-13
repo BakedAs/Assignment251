@@ -55,7 +55,7 @@ def main (argv):
             listBackups.list(archiveDir, argv[1])
     elif (argv[0] == "get"):
         if (len(argv) < 2):
-            print "Usage: mybackup get <directory>";
+            print "Usage: mybackup get <pattern>";
         else:
             restore.getFile(archiveDir, argv[1]);
     elif (argv[0] == "restore"):

@@ -2,6 +2,9 @@ __author__ = 'FrancisGreatorex'
 import os, os.path, shutil, utilities, sys;
 
 def restoreAll (archiveDir, path=None):
+    if (not os.path.exists(archiveDir) or not os.path.isdir(archiveDir)):
+        print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'restore'.";
+        return;
     index = utilities.loadIndex(archiveDir);
     if (path is None):#Restore to the original locations
         for filename, fileHash in index.items():
@@ -17,6 +20,9 @@ def restoreAll (archiveDir, path=None):
             restoreFile(archiveDir, fileHash, dest);
     
 def getFile (archiveDir, searchPattern):
+    if (not os.path.exists(archiveDir) or not os.path.isdir(archiveDir)):
+        print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'get'.";
+        return;
     index = utilities.loadIndex(archiveDir);
     matches = [];
     
