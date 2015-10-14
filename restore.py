@@ -5,7 +5,14 @@ def restoreAll (archiveDir, path=None):
     if (not os.path.exists(archiveDir) or not os.path.isdir(archiveDir)):
         print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'restore'.";
         return;
-    index = utilities.loadIndex(archiveDir);
+    try:
+        index = utilities.loadIndex(archiveDir);
+    except OSError as (errno, strerror):
+        print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+        return;
+    except IOError as (errno, strerror):
+        print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+        return;
     if (path is None):#Restore to the original locations
         for filename, fileHash in index.items():
             try:
@@ -33,7 +40,14 @@ def getFile (archiveDir, searchPattern):
     if (not os.path.exists(archiveDir) or not os.path.isdir(archiveDir)):
         print "The backup archive has not been created! Use 'mybackup init' to initialise the directory before calling 'get'.";
         return;
-    index = utilities.loadIndex(archiveDir);
+    try:
+        index = utilities.loadIndex(archiveDir);
+    except OSError as (errno, strerror):
+        print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+        return;
+    except IOError as (errno, strerror):
+        print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+        return;
     matches = [];
     
     #Find all the matching files.

@@ -10,13 +10,20 @@ def store (archiveDir, dirToBackup, logger):
         elif (not os.path.isdir(dirToBackup)):
             print "File '"+dirToBackup+"' is not a directory!";
             return;
-        index = utilities.loadIndex(archiveDir);
+        try:
+            index = utilities.loadIndex(archiveDir);
+        except OSError as (errno, strerror):
+            print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+            return;
+        except IOError as (errno, strerror):
+            print "Failed to load archive index at '"+archiveDir+"': "+strerror;
+            return;
         objectsDir = os.path.join(archiveDir, "objects");
         for root, dirs, files in os.walk(dirToBackup):
             for name in files:
                 try:
                     backupFile(objectsDir, os.path.join(root, name), index, logger);
-                except OSError as (errno, strerror, filename):
+                except OSError as (errno, strerror):
                     print "Failed to backup file '"+name+"': "+strerror;
                 except IOError as (errno, strerror):
                     print "Failed to backup file '"+name+"': "+strerror;
