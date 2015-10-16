@@ -49,10 +49,10 @@ def getFile (archiveDir, searchPattern):
         print "Failed to load archive index at '"+archiveDir+"': "+strerror;
         return;
     matches = [];
-    
+    searchPattern = searchPattern.lower();#Convert to lowercase for case insensitivity
     #Find all the matching files.
     for name in index:
-        if searchPattern in name:
+        if searchPattern in name.lower():
             matches.append(name);
     
     if (len(matches) == 0):
