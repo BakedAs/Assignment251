@@ -72,6 +72,8 @@ def getFile (archiveDir, searchPattern):
         i = 0;
         for name in matches:
             i+=1;
+			if (i > 50):
+				break;
             print str(i)+": "+name;
         destName = None;
         while (destName == None):
